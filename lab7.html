@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style type="text/css">
+.all{
+    text-align: center ;
+}
+</style>
+</head>
+<body>
+    <div class="all">
+    <div class="container">
+        <form action="#" class="courses-form" >
+            <p>Курсы</p>
+            <div class="languages">
+                <label for="courses">Выбери курс :</label>
+                <select name="courses" id="courses" class="courses">
+                    <option value="Html">Html</option>
+                    <option value="Css">Css</option>
+                    <option value="Js">Js</option>
+                </select>
+            </div>
+
+
+            <div class="frequency">
+                <label for="lessons">Сколько раз в неделю ?</label>
+                <select name="lessons" id="lessons">
+                    <option value="1">1</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <div class="form-of-study">
+                <div class="home">
+                    <label for="home">Очная</label>
+                    <input type="checkbox" name="study" id="home">
+                </div>
+
+                <div class="distant">
+                    <label for="distant">Дистанционно</label>
+                    <input type="checkbox" name="study" id="distant">
+                </div>
+            </div>
+
+            <div class="lotery">
+                <h3>Сыграй в лотерею чтобы выйграть скидку 50%</h3>
+                <button class="lotery-button">Сыграть</button>
+                <div class="numbers">
+                    <p class="inline-block lotery-number-one">1100</p>
+                    <p class="inline-block lotery-number-two">4224</p>
+                </div>
+            </div>
+
+            <button class="calculate-button">Посчитать стоимотсь</button>
+
+            <div class="cost">
+                <p>Стоимость:</p>
+                <div class="total-price"></div>
+            </div>
+
+        </form>
+    </div>
+    </div>
+
+<script type="text/javascript">
+    let oneLessonFT = 1500;
+let oneLessonRT = 1000;
+
+let chosenCourse = document.querySelector('.languages select');
+let inputHome = document.querySelector('.home input');
+let inputDistant = document.querySelector('.distant input')
+let lessons = document.querySelector('.frequency select');
+let button = document.querySelector('.calculate-button');
+let totalPrice = document.querySelector('.total-price');
+
+
+button.addEventListener('click', function(event){
+    event.preventDefault();
+    let course = chosenCourse.value;
+    let lessonsWeekly = lessons.value;
+    let checkedInput = inputHome.checked ? oneLessonFT: oneLessonRT;
+    let wholePrice = lessonsWeekly * checkedInput;
+    totalPrice.textContent = `${wholePrice}  рублей ${course}`
+
+    // Lotery stuff
+
+    let loteryButton = document.querySelector('.lotery-button');
+    let loteryNumOne = document.querySelector('.lotery-number-one');
+    let loteryNumTwo = document.querySelector('.lotery-number-two');
+
+        loteryButton.addEventListener('click', function(event){
+        event.preventDefault();
+        let randomNumOne = Math.floor((Math.random() + 0.1) * 1000);
+        let randomNumTwo = Math.floor((Math.random() + 0.1) * 1000);
+
+        loteryNumOne.textContent = randomNumOne;
+        loteryNumTwo.textContent = randomNumTwo;
+
+        let sumFunction = function(num){
+            return String(num).split('').reduce((accumilative, current) => {
+                return accumilative + Number(current);
+            }, 0)
+        }
+
+        let sumOfNumerOne = sumFunction(randomNumOne);
+        let sumOfNumberTwo = sumFunction(randomNumTwo);
+
+        if(sumOfNumerOne == sumOfNumberTwo){
+            loteryNumOne.style.color = "green";
+            loteryNumTwo.style.color = "green";
+            totalPrice.textContent = `${wholePrice/2}  рублей ${course}`;
+
+        }else{
+            loteryNumOne.style.color = 'black';
+            loteryNumTwo.style.color = 'black';
+        }
+
+        console.log(sumOfNumerOne, sumOfNumberTwo);
+})
+
+})
+
+
+</script>
+</body>
+</html>
